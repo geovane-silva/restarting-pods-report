@@ -90,7 +90,7 @@ You can extend the report period using the `<-p | --period>` flag
 
     POD                                                             CONTAINER                           NAMESPACE                           RESTARTS    READY   LAST TERMINATION
     xpto-app-6c44d97997-gx5qf                                       xpto-app                            xpto-namespace                      1           True    2022/12/26, 02:43:31 [2 days ago]
-    xpto-api-6d9c49db58-tqzsh                                       xpto-api                            xpto-namespace                       5           False   2022/12/28, 20:13:18 [29 minutes ago]
+    xpto-api-6d9c49db58-tqzsh                                       xpto-api                            xpto-namespace                      5           False   2022/12/28, 20:13:18 [29 minutes ago]
     my-xpto-application-dd4575ko5-44k5g                             my-xpto-application                 xpto-namespace                      1           True    2022/12/25, 10:58:14 [3 days ago]
     my-xpto-application-dd4575ko5-5jv7g                             my-xpto-application                 xpto-namespace                      122         True    2022/12/25, 06:09:02 [3 days ago]
     my-xpto-application-dd4575ko5-6h74m                             my-xpto-application                 xpto-namespace                      125         True    2022/12/23, 06:09:08 [5 days ago]
