@@ -2,9 +2,6 @@
     This scripts creates a report of restarting pods and general pods
     states on a Kubernetes cluster.
 
-    It uses the kubernetes Python client to list the pods, authenticating
-    using the present kube context.
-
     Arguments
     ---------
         namespace             : report namespace
