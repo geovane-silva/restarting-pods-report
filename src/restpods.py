@@ -15,20 +15,16 @@
         -q, --quiet           : enters quiet mode
         -h, --help            : prints help message
 """
-
 import argparse
 from datetime import datetime, timedelta, date
 import sys
 import csv
 import urllib3
 import timeago
-from kubernetes import client, config
-from kubernetes.client.rest import ApiException
 from pytz import timezone
+from pods_list import PodsList
 
 urllib3.disable_warnings()
-
-config.load_kube_config()
 
 class Report:
     """
@@ -65,7 +61,8 @@ class Report:
             Exports report to a  .csv file
     """
 
-    def __init__(self, namespace=False, period=2, ignore_warnings=False, headerless=False):
+    def __init__(self, namespace=False, period=2, ignore_warnings=False,
+                 headerless=False, pods_list=[]):
         """
             Parameters
             ----------
@@ -85,22 +82,8 @@ class Report:
         self.period = period
         self.ignore_warnings = ignore_warnings
         self.headerless = headerless
+        self.pods_list = pods_list
         self.restarting_containers_report = self.get_restarting_containers_report()
-
-    def list_pods(self):
-        """
-            Returns the pods list on the specified namespace.If not set, list pods for
-            all namespaces
-        """
-        v1_client = client.CoreV1Api()
-        try:
-            if self.namespace:
-                return v1_client.list_namespaced_pod(self.namespace)
-            return v1_client.list_pod_for_all_namespaces()
-        except ApiException as exception:
-            print('Exception while listing pods: ')
-            print(exception.reason)
-            sys.exit(1)
 
     def format_date(self, finished_at):
         """
@@ -122,7 +105,7 @@ class Report:
         restarting_containers = []
         not_running_containers = []
         warnings = []
-        pods_list = self.list_pods()
+        pods_list = self.pods_list.get()
         if len(pods_list.items) > 0:
             for pod in pods_list.items:
                 if pod.status.phase.lower() == 'running':
@@ -271,7 +254,9 @@ if __name__ == "__main__":
 
         args = parser.parse_args()
 
-        report = Report(args.namespace, args.period, args.ignore_warnings, args.remove_headers)
+        pods_list = PodsList(auth_method='local', namespace=args.namespace)
+        report = Report(args.namespace, args.period, args.ignore_warnings,
+                        args.remove_headers, pods_list)
 
         if not args.quiet:
             report.print_restarting_containers_report()
