@@ -197,7 +197,7 @@ class Report:
         csv_name = f'{datetime.now().strftime("%Y_%m_%d")}_restarting_pods_report.csv'
         print(f'Exporting {csv_name}')
         try:
-            with open(csv_name, mode='w') as exported_report:
+            with open(csv_name, mode='w', encoding="utf-8") as exported_report:
                 report_writer = csv.writer(exported_report, \
                                         delimiter=',',
                                         quotechar='"',
