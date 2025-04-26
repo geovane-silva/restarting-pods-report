@@ -1,3 +1,5 @@
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 # Restarting Pods Report
 
 This is a Python script that uses the [Kubernetes Python client](https://github.com/kubernetes-client/python) to list the pods that restarted on a given period of time.
